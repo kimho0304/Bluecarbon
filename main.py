@@ -9,7 +9,7 @@ from PyQt5.QtCore import pyqtSlot
 class Form(QMainWindow):
     def __init__(self) :
         super().__init__()
-        self.ui = uic.loadUi("index.ui", self)
+        self.ui = uic.loadUi("originUI.ui", self)
         #self.setupUi(self)
         self.ui.show()
 
