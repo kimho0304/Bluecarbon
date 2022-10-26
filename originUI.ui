@@ -471,6 +471,19 @@
       </widget>
      </widget>
     </widget>
+    <widget class="QPushButton" name="pushButton">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>0</y>
+       <width>75</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>그래프 보기</string>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QStatusBar" name="tmh_status_bar"/>
@@ -847,6 +860,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>tmh_main_window</receiver>
+   <slot>tmh_show_graph()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>504</x>
+     <y>121</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1017</x>
+     <y>180</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>tmh_new_file()</slot>
@@ -865,5 +894,6 @@
   <slot>tmh_calc_ambi()</slot>
   <slot>tmh_calc_isep()</slot>
   <slot>tmh_calc_sw_index()</slot>
+  <slot>tmh_show_graph()</slot>
  </slots>
 </ui>
