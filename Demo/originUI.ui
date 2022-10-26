@@ -61,7 +61,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>종별코드파일.xlsx</string>
+      <string/>
      </property>
     </widget>
     <widget class="QLabel" name="tmh_standard_box_title1">
@@ -213,7 +213,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>데이터파일.xlsx</string>
+      <string>파일을 선택하세요.</string>
      </property>
     </widget>
     <widget class="QTableWidget" name="tmh_validate_box_result">
@@ -553,8 +553,8 @@
    <slot>tmh_new_file()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>24</x>
-     <y>4</y>
+     <x>-1</x>
+     <y>-1</y>
     </hint>
     <hint type="destinationlabel">
      <x>8</x>
@@ -665,8 +665,8 @@
    <slot>tmh_set_workdir()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>94</x>
-     <y>50</y>
+     <x>-1</x>
+     <y>-1</y>
     </hint>
     <hint type="destinationlabel">
      <x>511</x>

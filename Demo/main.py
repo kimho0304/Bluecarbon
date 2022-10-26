@@ -4,9 +4,7 @@ from PyQt5 import uic
 from PyQt5.QtCore import pyqtSlot
 import pandas as pd
 import numpy as np
-import operator
 from functools import WRAPPER_ASSIGNMENTS, reduce
-import time
 import os
 
 class Form(QMainWindow):
@@ -29,8 +27,8 @@ class Form(QMainWindow):
             fpath = QFileDialog.getOpenFileName(self, '파일 선택', filter='Excel file(*xls *xlsx)')
         
         if fpath[0] != '':
-            global excel_data2
-            excel_data2 = pd.read_excel(fpath[0], sheet_name=1)
+            global excel_data3
+            excel_data3 = pd.read_excel(fpath[0], sheet_name=2)
 
             self.tmh_validate_box_input.setText(fpath[0])
 
@@ -42,11 +40,22 @@ class Form(QMainWindow):
 
     @pyqtSlot()
     def tmh_save_this(self):
-        excel_data3.to_excel(fpath, index=False)
+        global excel_data3
+        excel_data3.to_excel(fpath[0].replace('.xls','_result.xls'), index=False)
+        QMessageBox.information(self,'Success!','저장이 완료되었습니다.')
         pass
 
     @pyqtSlot()
     def tmh_custom_save(self):
+        global excel_data3
+        try:
+            savepath = QFileDialog.getSaveFileName(self, '파일 저장', workdir, filter='Excel file(*xls *xlsx)')    
+        except NameError:
+            savepath = QFileDialog.getSaveFileName(self, '파일 저장', filter='Excel file(*xls *xlsx)')
+        if savepath[0] != '':
+            excel_data3.to_excel(savepath[0].replace('.xlsx', '').replace('.xls', '')+'.xlsx', index=False)
+            QMessageBox.information(self,'Success!','저장이 완료되었습니다.')
+        
         pass
 
     @pyqtSlot()
@@ -55,8 +64,8 @@ class Form(QMainWindow):
 
     @pyqtSlot()
     def tmh_menu_close(self):
-        while (self.tableFriends.rowCount() > 0):
-            self.tableFriends.removeRow(0)
+        while (self.tmh_validate_box_result.rowCount() > 0):
+            self.tmh_validate_box_result.removeRow(0)
         pass
 
     #Menu(선택)
@@ -97,6 +106,10 @@ class Form(QMainWindow):
             excel_data = pd.read_excel(fpath[0], sheet_name=0)
             excel_data = excel_data.fillna(0)
 
+            global excel_data2
+            excel_data2 = pd.read_excel(fpath[0], sheet_name=1)
+
+            self.tmh_validate_box_result.setRowCount(len(excel_data2.index))
             self.tmh_validate_box_result.setItem(0, 0, QTableWidgetItem('test'))
 
         except NameError:
@@ -123,7 +136,7 @@ class Form(QMainWindow):
 
         num = 1
 
-        while num < jj_count:
+        while num <= jj_count:
             N = 0
             B = 0
 
@@ -169,6 +182,12 @@ class Form(QMainWindow):
             if(status != int(num/jj_count*100)):
                 status = int(num/jj_count*100)
                 self.tmh_inverse_SW_bar.setValue(status)
+
+        global excel_data3
+        excel_data3['ISEP'] = ''
+        for i in range(0, jj_count, 1):
+            excel_data3['ISEP'][i] = ISEP_list[i]
+
         pass
 
     @pyqtSlot()
@@ -184,7 +203,7 @@ class Form(QMainWindow):
 
         num = 1
 
-        while num < jj_count:
+        while num <= jj_count:
             N = 0
             B = 0
 
@@ -215,7 +234,7 @@ class Form(QMainWindow):
             #print(N_num)
             sw_ln_list.append(sw_ln)
             #print(sw_ln)
-            sw_ln_list.append(sw_log)
+            sw_log_list.append(sw_log)
             #print(sw_log)
 
             num += 1
@@ -224,6 +243,15 @@ class Form(QMainWindow):
             if(status != int(num/jj_count*100)):
                 status = int(num/jj_count*100)
                 self.tmh_SW_bar.setValue(status)
+
+        global excel_data3
+        excel_data3['Shannon-Wiener Index (ln)'] = ''
+        for i in range(0, jj_count, 1):
+            excel_data3['Shannon-Wiener Index (ln)'][i] = sw_ln_list[i]
+
+        excel_data3['Shannon-Wiener Index (log2)'] = ''
+        for i in range(0, jj_count, 1):
+            excel_data3['Shannon-Wiener Index (log2)'][i] = sw_log_list[i]
             
         pass
 
