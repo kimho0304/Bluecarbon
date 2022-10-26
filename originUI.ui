@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1024</width>
+    <width>1025</width>
     <height>768</height>
    </rect>
   </property>
@@ -30,9 +30,9 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>179</y>
+       <y>199</y>
        <width>300</width>
-       <height>221</height>
+       <height>201</height>
       </rect>
      </property>
      <column>
@@ -61,7 +61,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>종별코드파일.xlsx</string>
+      <string/>
      </property>
     </widget>
     <widget class="QLabel" name="tmh_standard_box_title1">
@@ -96,7 +96,7 @@
        <x>10</x>
        <y>100</y>
        <width>300</width>
-       <height>51</height>
+       <height>71</height>
       </rect>
      </property>
      <attribute name="horizontalHeaderDefaultSectionSize">
@@ -142,13 +142,26 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>160</y>
+       <y>180</y>
        <width>261</width>
        <height>16</height>
       </rect>
      </property>
      <property name="text">
       <string>종별 코드표</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="tmh_menu_options_type_code">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>10</y>
+       <width>111</width>
+       <height>32</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>종별 코드 선택</string>
      </property>
     </widget>
    </widget>
@@ -180,8 +193,8 @@
     <widget class="QPushButton" name="tmh_validate_box_validate_btn">
      <property name="geometry">
       <rect>
-       <x>250</x>
-       <y>20</y>
+       <x>240</x>
+       <y>10</y>
        <width>71</width>
        <height>32</height>
       </rect>
@@ -193,8 +206,8 @@
     <widget class="QPushButton" name="tmh_validate_box_select_btn">
      <property name="geometry">
       <rect>
-       <x>170</x>
-       <y>20</y>
+       <x>160</x>
+       <y>10</y>
        <width>71</width>
        <height>32</height>
       </rect>
@@ -213,7 +226,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>데이터파일.xlsx</string>
+      <string>파일을 선택하세요.</string>
      </property>
     </widget>
     <widget class="QTableWidget" name="tmh_validate_box_result">
@@ -335,10 +348,13 @@
         <rect>
          <x>10</x>
          <y>10</y>
-         <width>611</width>
+         <width>800</width>
          <height>511</height>
         </rect>
        </property>
+       <attribute name="horizontalHeaderDefaultSectionSize">
+        <number>250</number>
+       </attribute>
        <column>
         <property name="text">
          <string>정점</string>
@@ -360,7 +376,7 @@
         </rect>
        </property>
        <property name="value">
-        <number>24</number>
+        <number>0</number>
        </property>
       </widget>
      </widget>
@@ -377,6 +393,9 @@
          <height>511</height>
         </rect>
        </property>
+       <attribute name="horizontalHeaderDefaultSectionSize">
+        <number>250</number>
+       </attribute>
        <column>
         <property name="text">
          <string>정점</string>
@@ -398,7 +417,7 @@
         </rect>
        </property>
        <property name="value">
-        <number>24</number>
+        <number>0</number>
        </property>
       </widget>
      </widget>
@@ -415,6 +434,12 @@
          <height>511</height>
         </rect>
        </property>
+       <attribute name="horizontalHeaderCascadingSectionResizes">
+        <bool>false</bool>
+       </attribute>
+       <attribute name="horizontalHeaderDefaultSectionSize">
+        <number>170</number>
+       </attribute>
        <column>
         <property name="text">
          <string>정점</string>
@@ -422,7 +447,12 @@
        </column>
        <column>
         <property name="text">
-         <string>지수</string>
+         <string>지수(ln)</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>지수(log)</string>
         </property>
        </column>
       </widget>
@@ -436,7 +466,7 @@
         </rect>
        </property>
        <property name="value">
-        <number>24</number>
+        <number>0</number>
        </property>
       </widget>
      </widget>
@@ -449,8 +479,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1024</width>
-     <height>28</height>
+     <width>1025</width>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="tmh_menu_file">
@@ -472,7 +502,6 @@
      <string>선택</string>
     </property>
     <addaction name="tmh_menu_options_workdir"/>
-    <addaction name="tmh_menu_options_type_code"/>
     <addaction name="separator"/>
     <addaction name="separator"/>
    </widget>
@@ -528,7 +557,7 @@
     <string>전체 저장</string>
    </property>
   </action>
-  <action name="tmh_menu_options_type_code">
+  <action name="action">
    <property name="text">
     <string>종별 코드 선택</string>
    </property>
@@ -553,8 +582,8 @@
    <slot>tmh_new_file()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>24</x>
-     <y>4</y>
+     <x>-1</x>
+     <y>-1</y>
     </hint>
     <hint type="destinationlabel">
      <x>8</x>
@@ -665,8 +694,8 @@
    <slot>tmh_set_workdir()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>94</x>
-     <y>50</y>
+     <x>-1</x>
+     <y>-1</y>
     </hint>
     <hint type="destinationlabel">
      <x>511</x>
@@ -675,7 +704,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>tmh_menu_options_type_code</sender>
+   <sender>action</sender>
    <signal>triggered()</signal>
    <receiver>tmh_main_window</receiver>
    <slot>tmh_set_type_code()</slot>
@@ -730,7 +759,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>225</x>
-     <y>72</y>
+     <y>71</y>
     </hint>
     <hint type="destinationlabel">
      <x>511</x>
@@ -794,11 +823,27 @@
    <hints>
     <hint type="sourcelabel">
      <x>305</x>
-     <y>72</y>
+     <y>71</y>
     </hint>
     <hint type="destinationlabel">
      <x>511</x>
      <y>383</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tmh_menu_options_type_code</sender>
+   <signal>clicked()</signal>
+   <receiver>tmh_main_window</receiver>
+   <slot>tmh_set_type_code()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>282</x>
+     <y>337</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>7</x>
+     <y>312</y>
     </hint>
    </hints>
   </connection>
