@@ -7,49 +7,10 @@ import numpy as np
 import os
 from PyQt5.QtWidgets import QApplication
 import pyqtgraph as pg
-
-class TheGraph(QWidget):
-
-    def __init__(self):
-        super().__init__()
-
-        pg.setConfigOptions(background='w')  # 배경 흰색으로.. ; global configuration options
-
-        y = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
-
-        y2 = [0, 1, 2, 4, 12, 14, 16, 17, 14, 22]
-
-        x = range(0, 10)
-
-        pw = pg.PlotWidget()
-
-        pw.showGrid(x=True, y=True)
-
-        pw.addLegend(
-        size=(100, 10))  # LegendItem() 없으면, 생성후 반환 ; 매개변수는 LegendItem() 에서 사용 ==> size=(width,height)
-
-        pw.setLabel("left", text="Value", units="v")  # PlotItem() 메소드
-
-        pw.setLabel('bottom', text="Time", units='s')
-
-        pw.setXRange(0, 10)  # 내부적으로 ViewBox() 메소드 사용함. -- setXRange(min, max, padding=None, update=True)
-
-        pw.setYRange(0, 25)
-
-        pw.plot(x, y, pen='b', symbol='x', symbolPen='g', symbolBrush=0.2, name='green')
-
-        pw.plot(x, y2, pen='r', symbol='o', symbolPen='b', symbolBrush=0.2, name='blue')
-
-        layout = QHBoxLayout()
-
-        layout.addWidget(pw)
-
-        self.setLayout(layout)
-
-        self.setGeometry(300, 100, 550, 650)  # x, y, width, height
-
-        self.setWindowTitle("pyqtgraph 예제 2")
-
+global ISEP_list, sw_ln_list, sw_log_list, AMBI_list
+global excel_data
+global standard_path
+global jj_count
 class Form(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -57,7 +18,8 @@ class Form(QMainWindow):
         self.ui.show()
 
     def tmh_show_graph(self):
-        result_graph.show()
+        self.line_graph = IndexGraph()
+        self.line_graph.show()
 
     # Menu(파일)
     @pyqtSlot()
@@ -402,6 +364,7 @@ class Form(QMainWindow):
     @pyqtSlot()
     def tmh_calc_sw_index(self):
         global excel_data2
+        global jj_count
         jj_count = len(excel_data2.index)
         self.tmh_SW_result.setRowCount(jj_count)
 
@@ -468,11 +431,44 @@ class Form(QMainWindow):
 
         pass
 
+class IndexGraph(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        global ISEP_list, AMBI_list, sw_ln_list
+        global jj_count
+
+        num = 0
+        global N_num
+        N_num  = []
+        while num < jj_count:
+            if num / 1000 >= 1:
+                N_num.append('N' + str(num))
+            elif num / 100 >= 1:
+                N_num.append('N0' + str(num))
+            elif num / 10 >= 1:
+                N_num.append('N00' + str(num))
+            else:
+                N_num.append('N000' + str(num))
+            num += 1
+
+        self.plot_widget = pg.PlotWidget()
+        self.setCentralWidget(self.plot_widget)
+        pg.setConfigOptions(background='w')
+        x = N_num
+        y = [AMBI_list, ISEP_list, sw_ln_list] #y축 레이블, 인덱스 값이 들어감
+
+        color = ['r', 'g', 'b']
+        xdict = dict(enumerate(x))
+        ticks = [list(zip(xdict.keys(), xdict.values()))]
+        for i in range(3):
+            self.plot_widget.plot(list(xdict.keys()), y[i], pen=pg.mkPen(width=3, color=color[i]), name=y[i])
+        xax = self.plot_widget.getAxis('bottom')
+        xax.setTicks(ticks)
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     myWindow = Form()
     myWindow.show()
-
-    result_graph = TheGraph()
     app.exec_()
